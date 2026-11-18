@@ -9,6 +9,7 @@ public class Course {
 
     public Course(String courseName) {
         this.courseName = courseName;
+        this.enrolledStudents = new StudentRecord[0];
     }
 
     public String getCourseName() {
@@ -22,18 +23,21 @@ public class Course {
     public String toString() {
         String name = "== " + courseName + " ==\n";
         String full = "";
-        for (int i = 0; i < enrolledStudents.length; i++) {
-            int startNum = 1;
-            full = startNum + ".) " + enrolledStudents[i].getName().toString() + "\n";
+        if (enrolledStudents != null) {
+            for (int i = 0; i < enrolledStudents.length; i++) {
+                full += (i + 1) + ".) " + enrolledStudents[i].toString() + "\n";
+            }
         }
         return name + full;
     }
 
     public String findBestStudent() {
-        String best = "";
+        if (enrolledStudents == null || enrolledStudents.length == 0) {
+            return null;
+        }
+        String best = enrolledStudents[0].getName();
+        int best1 = 0;
         for (int i = 0; i < enrolledStudents.length; i++) {
-            best = enrolledStudents[0].getName();
-            int best1 = 0;
             if (enrolledStudents[best1].getFinalAverage() < enrolledStudents[i].getFinalAverage()) {
                 best1 = i;
                 best = enrolledStudents[i].getName();
@@ -43,6 +47,9 @@ public class Course {
     }
 
     public double calculateTestAverage(int testNumber) {
+        if (enrolledStudents == null || enrolledStudents.length == 0) {
+            return 0.0;
+        }
         int students = enrolledStudents.length;
         double total = 0.0;
         double count = 0.0;
@@ -54,4 +61,25 @@ public class Course {
         return total / count;
     }
 
+    public void addStudent(StudentRecord newStudent) {
+        if (newStudent == null) {
+            return;
+        }
+        if (enrolledStudents == null) {
+            enrolledStudents = new StudentRecord[1];
+            enrolledStudents[0] = newStudent;
+        } else {
+            StudentRecord[] temp = new StudentRecord[enrolledStudents.length + 1];
+            for (int i = 0; i < enrolledStudents.length; i++) {
+                temp[i] = enrolledStudents[i];
+            }
+            temp[temp.length - 1] = newStudent;
+            enrolledStudents = temp;
+        }
+    }
+
+    public void addStudent(String name, int[] scores) {
+        StudentRecord newStudent = new StudentRecord(name, scores);
+        addStudent(newStudent);
+    }
 }

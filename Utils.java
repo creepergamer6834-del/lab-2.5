@@ -1,10 +1,15 @@
 public class Utils {
     public static String printArray(int[] array) {
-        String array1 = "";
-        for (int i : array) {
-            array1 += (i + ", ");
+        if (array == null || array.length == 0) {
+            return "";
         }
-
+        String array1 = "";
+        for (int i = 0; i < array.length; i++) {
+            array1 += array[i];
+            if (i < array.length - 1) {
+                array1 += ", ";
+            }
+        }
         return array1;
     }
 
@@ -159,14 +164,18 @@ public class Utils {
     }
 
     public static double average(int[] numbers, int start) {
-        if (numbers == null || numbers.length == 0) {
+        if (numbers == null || numbers.length == 0 || start >= numbers.length) {
             return 0.0;
         }
         int sum = 0;
+        int count = 0;
         for (int i = start; i < numbers.length; i++) {
             sum += numbers[i];
+            count++;
         }
-        return (double) sum / numbers.length;
+        if (count == 0)
+            return 0.0;
+        return (double) sum / count;
     }
 
     public static boolean contains(int[] numbers, int target) {
@@ -182,7 +191,7 @@ public class Utils {
     }
 
     public static boolean hasImproved(int[] numbers) {
-        if (numbers.length <= 0) {
+        if (numbers == null || numbers.length <= 1) {
             return true;
         }
         for (int i = 1; i < numbers.length; i++) {
@@ -196,14 +205,24 @@ public class Utils {
     }
 
     public static int getNumber(int[] numbers, int index) {
+        if (numbers == null || index < 0 || index >= numbers.length) {
+            return -1;
+        }
         return numbers[index];
     }
 
     public static double getAverageFromArray(int[] numbers, int num1, int num2) {
-
-        double a = getNumber(numbers, num1);
-        double b = getNumber(numbers, num2);
-        double average = (double) (a / b);
-        return average;
+        if (numbers == null || num1 < 0 || num2 >= numbers.length || num1 > num2) {
+            return 0.0;
+        }
+        int sum = 0;
+        int count = 0;
+        for (int i = num1; i <= num2; i++) {
+            sum += numbers[i];
+            count++;
+        }
+        if (count == 0)
+            return 0.0;
+        return (double) sum / count;
     }
 }

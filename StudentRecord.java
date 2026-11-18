@@ -4,11 +4,15 @@ public class StudentRecord {
 
     public StudentRecord(String name, int[] scores) {
         this.name = name;
-        this.scores = scores;
+        if (scores == null) {
+            this.scores = new int[0];
+        } else {
+            this.scores = scores;
+        }
     }
 
     public StudentRecord(String name) {
-        this.name = name;
+        this(name, new int[0]);
     }
 
     public String getName() {
@@ -20,6 +24,9 @@ public class StudentRecord {
     }
 
     public int getTestScore(int testNumber) {
+        if (scores == null || testNumber < 0 || testNumber >= scores.length) {
+            return -1;
+        }
         return Utils.getNumber(scores, testNumber);
     }
 
