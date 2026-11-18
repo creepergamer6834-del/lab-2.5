@@ -173,8 +173,9 @@ public class Utils {
             sum += numbers[i];
             count++;
         }
-        if (count == 0)
+        if (count == 0) {
             return 0.0;
+        }
         return (double) sum / count;
     }
 
@@ -197,7 +198,7 @@ public class Utils {
         for (int i = 1; i < numbers.length; i++) {
             int previous = numbers[i - 1];
             int current = numbers[i];
-            if (current <= previous) {
+            if (current < previous) {
                 return false;
             }
         }
@@ -221,8 +222,9 @@ public class Utils {
             sum += numbers[i];
             count++;
         }
-        if (count == 0)
+        if (count == 0) {
             return 0.0;
+        }
         return (double) sum / count;
     }
 }
